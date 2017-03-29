@@ -1,13 +1,21 @@
 import express from 'express';
-import mysql from 'mysql';
 import bodyParser from 'body-parser';
+import fs from 'fs';
 
+var file = "crountch.db";
+var exists = fs.existsSync(file);
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var uidEncoding = 'hex';
+
+var sqlite3 = require("sqlite3").verbose();
+var db = new sqlite3.Database(file);
+
+db.serialize(() => {
+	db.run("CREATE TABLE IF NOT EXISTS url (ID INTEGER PRIMARY KEY AUTOINCREMENT, URL TEXT NOT NULL)");
+});
+
 var app = express();
 app.set('view engine', 'pug');
-
-var connection = mysql.createConnection({host: 'localhost', user: 'root',password: 'root', database: 'test_node'});
 
 app.get('/', (req, res) => {
 	res.render('index');
@@ -15,26 +23,26 @@ app.get('/', (req, res) => {
 
 app.post('/', urlencodedParser, (req, res) => {
 	var url = req.body.url;
-	connection.query('INSERT INTO node_url SET URL = ?', [url], function (error, results, fields) {
-  		if (error) throw error;
-  		var encodedId = new Buffer(results.insertId.toString(), 'utf-8').toString(uidEncoding);
-  		res.render('posted', { title: 'Hey Hey Hey posted!', message: "http://localhost:3000/" + encodedId, lien: req.body.url});
+	db.run('INSERT INTO url (URL) VALUES (?)', [url], (error, results) => {
+		if (error) throw error;
+		var encodedId = new Buffer(db.lastID, 'utf-8').toString(uidEncoding);
+		res.render('posted', { title: 'Hey Hey Hey posted!', message: "http://localhost:3000/" + encodedId, lien: req.body.url });
 	});
 })
 
 app.get('/:id', (req, res) => {
-  var decodecId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
-  connection.query('SELECT * from node_url WHERE ID = ?', [decodecId], (error, results, fields) => {
-	 if (error) throw error; 
-	 res.redirect(results[0].URL)
+	var decodecId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
+	db.run('SELECT * from url WHERE ID = ?', [decodecId], (error, results) => {
+		if (error) throw error;
+		res.redirect(results[0].URL)
 	});
 });
 
-pp.get('/WTFIsThisShitAgain/:id', (req, res) => {
-  var decodecId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
-  connection.query('SELECT * from node_url WHERE ID = ?', [decodecId], (error, results, fields) => {
-	 if (error) throw error; 
-	 res.end(results[0].URL)
+app.get('/WTFIsThisShitAgain/:id', (req, res) => {
+	var decodecId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
+	db.run('SELECT * from url WHERE ID = ?', [decodecId], (error, results) => {
+		if (error) throw error;
+		res.end(results[0].URL)
 	});
 });
 
