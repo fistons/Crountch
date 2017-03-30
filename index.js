@@ -1,49 +1,47 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import fs from 'fs';
+import sqlite3 from 'sqlite3';
 
-var file = "crountch.db";
-var exists = fs.existsSync(file);
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var uidEncoding = 'hex';
+let file = "crountch.db";
+let urlencodedParser = bodyParser.urlencoded({ extended: false });
+let uidEncoding = 'hex';
+let db = new sqlite3.Database(file);
+let port = 3000;
 
-var sqlite3 = require("sqlite3").verbose();
-var db = new sqlite3.Database(file);
-
-db.serialize(() => {
-	db.run("CREATE TABLE IF NOT EXISTS url (ID INTEGER PRIMARY KEY AUTOINCREMENT, URL TEXT NOT NULL)");
-});
-
-var app = express();
+let app = express();
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
 	res.render('index');
 })
 
+// TODO Check if this a real url
 app.post('/', urlencodedParser, (req, res) => {
-	var url = req.body.url;
-	db.run('INSERT INTO url (URL) VALUES (?)', [url], (error, results) => {
+	let postedUrl = req.body.url;
+	db.run('INSERT INTO url VALUES (NULL, ?)', [postedUrl], function (error) {
 		if (error) throw error;
-		var encodedId = new Buffer(db.lastID, 'utf-8').toString(uidEncoding);
-		res.render('posted', { title: 'Hey Hey Hey posted!', message: "http://localhost:3000/" + encodedId, lien: req.body.url });
+		let encodedId = new Buffer(this.lastID.toString(), 'utf-8').toString(uidEncoding);
+		res.render('posted', { url: "http://localhost:3000/" + encodedId, lien: req.body.url });		
 	});
 })
 
+// TODO Check if id exist
 app.get('/:id', (req, res) => {
-	var decodecId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
-	db.run('SELECT * from url WHERE ID = ?', [decodecId], (error, results) => {
+	let decodedId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
+	db.get('SELECT * from url WHERE ID = ?', [decodedId], (error, results) => {
 		if (error) throw error;
-		res.redirect(results[0].URL)
+		res.redirect(results.URL)
 	});
 });
 
+// TODO Check if id exist
 app.get('/WTFIsThisShitAgain/:id', (req, res) => {
-	var decodecId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
-	db.run('SELECT * from url WHERE ID = ?', [decodecId], (error, results) => {
+	let decodecId = new Buffer(req.params.id, uidEncoding).toString('utf-8');
+	db.get('SELECT * from url WHERE ID = ?', [decodecId], (error, results) => {
 		if (error) throw error;
-		res.end(results[0].URL)
+		res.end(results.URL)
 	});
 });
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+db.serialize(() => 	db.run("CREATE TABLE IF NOT EXISTS url (ID INTEGER PRIMARY KEY, URL TEXT NOT NULL)"));
+app.listen(port, () => console.log('Crountch listening on port ' + port));
