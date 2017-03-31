@@ -1,9 +1,21 @@
 doctype html
-html  
+html(lang="en")
   head
-    title= "Hey hey hey!"
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport",content="width=device-width, initial-scale=1")
+    title= "Crountch! Url shortener"
+    link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
+  
   body
-    h1= "Yo yo yo!"
-    form(name="urlForm", id="urlForm", method="POST", action="/")
-        input(type='text', name='url',  placeholder='Pose ton flow')
-        input(type='submit',  placeholder='Pose ton flow')
+    
+    div(class="container")
+      div(class="page-header")
+        h1= "Crountch! "
+          small= "Url shortener"
+      form(name="urlForm", id="urlForm", method="POST", action="/")
+        div(class="input-group")
+          input(type='url', name='url',  placeholder='Pose ton flow', class="form-control")
+          span(class="input-group-btn")
+            input(type='submit',  placeholder='Pose ton flow', class="btn btn-success", value="Crountch!")
+              
