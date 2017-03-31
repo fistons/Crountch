@@ -1,11 +1,18 @@
 doctype html
-html  
+html(lang="fr")
   head
-    title="Bravo champion!"
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport",content="width=device-width, initial-scale=1")
+    title= "Crountch! Url shortener"
+    link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
+  
   body
-    h1
-      a(href= url)= url
-
-    h2
-      a(href= lien)= lien
     
+    div(class="container")
+      div(class="page-header")
+        h1= "Crountch! "
+          small= "Url shortener"
+      h3= lien
+      input(type='url', name='url',  placeholder='Pose ton flow', class="form-control", value= url)
+      

@@ -23,10 +23,10 @@ app.post('/', urlencodedParser, (req, res) => {
 		res.end('Check your privileges! (and your URL)');
 		return;
 	}
-
 	db.run(insertRequest, [postedUrl], function (error) {
 		if (error) throw error;
 		let encodedId = new Buffer(this.lastID.toString(), 'utf-8').toString(uidEncoding);
+		console.log("Url posted: " + postedUrl + " - Id created: " + encodedId);	
 		res.render('posted', { url: req.protocol + '://' + req.get('host') + "/" + encodedId, lien: req.body.url });
 	});
 })
