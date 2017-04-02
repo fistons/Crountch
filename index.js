@@ -12,6 +12,7 @@ const regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.)
 
 const app = express();
 app.set('view engine', 'pug');
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
 	res.render('index');

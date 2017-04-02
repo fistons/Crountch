@@ -9,13 +9,14 @@ html(lang="fr")
   
   body
     
-    div(class="container")
+    div(class="container text-center")
       div(class="page-header")
-        h1= "Crountch! "
-          small= "Url shortener"
+        h1
+          a(href="/")="Crountch!"
+          small= " Url shortener"
       form(name="urlForm", id="urlForm", method="POST", action="/")
         div(class="input-group")
-          input(type='url', name='url',  placeholder='Pose ton flow', class="form-control")
+          input(type='url', name='url',  placeholder='Drop your URL', class="form-control")
           span(class="input-group-btn")
-            input(type='submit',  placeholder='Pose ton flow', class="btn btn-success", value="Crountch!")
+            input(type='submit', class="btn btn-success", value="Crountch!")
               
