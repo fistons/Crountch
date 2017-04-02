@@ -1,9 +1,7 @@
-# Crountch! Url reducer
+# Crountch! URL shortener
 
 ## What?
-
-## How?
+Crountch is an really basic URL shortener writen in ECMAScript for node.js using babel, pug, express and sqlite 
 
 ## Why?
-
-## Who?
+I wanted to understand what node.js was so suddently popular. I still doesn't understand.
