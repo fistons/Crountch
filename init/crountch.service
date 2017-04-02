@@ -1,0 +1,14 @@
+[Unit]
+Description=Crountch URL Reducer
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=crountch
+Group=crountch
+ExecStart=/usr/bin/nodejs /opt/Crountch/dist/index.js
+Restart=always
+WorkingDirectory=/opt/Crountch
+
+[Install]
+WantedBy=multi-user.target
