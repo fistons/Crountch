@@ -1,14 +1,29 @@
 {
   "name": "test-babel",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple URL shortener in node.js",
+  "keywords": [
+    "express", "pug", "sqlite", "babel", "url-reducer", "ecmascript2015"
+  ],
   "main": "index.js",
   "scripts": {
     "start": "nodemon lib/index.js --exec babel-node",
     "build": "babel lib -d dist",
     "serve": "node dist/index.js"
   },
-  "author": "",
+  "author": {
+    "name": "Eric 'Fistons' Mercier",
+    "email": "mercier.eric@gmail.com",
+    "url": "https://pedr0.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fistons/Crountch"
+  },
+  "bugs": {
+    "url" : "https://github.com/fistons/Crountch/issues"
+  },
+  "private": true,
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.24.0",
