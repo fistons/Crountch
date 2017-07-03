@@ -18,7 +18,7 @@ I wanted to understand what node.js was so suddently popular. I still doesn't un
  * Clone this repository: `sudo -u crountch git clone https://github.com/fistons/Crountch /opt/Crountch`
  * Go to this folder: `cd /opt/Crountch`
  * Install the depencies: `sudo -u crountch npm install`
- * Compile the ugly ECMAScript 2015 in a more ugly vanilla javascript for node: `sudo npm run build`
+ * Compile the ugly ECMAScript 2015 in a more ugly vanilla javascript for node: `sudo -u crountch npm run build`
  * That's it
 
 # Run
@@ -28,4 +28,4 @@ I wanted to understand what node.js was so suddently popular. I still doesn't un
     * `sudo systemctl daemon-reload`
     * `sudo systemctl start crountch` To run it
     * `sudo systemctl enable crountch` To enable it on boot 
-    * You are not using systemd? Too bad, but maybe there is someone good in the world who would contribute with a nice script for your init system?
+    * You are not using systemd? Too bad, but maybe there is someone good in this world who would contribute with a nice script for your init system?
