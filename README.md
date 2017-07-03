@@ -1,5 +1,7 @@
 # Crountch! URL shortener
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/60192212a8ec4b689c7f6f92804f2175)](https://www.codacy.com/app/fistons/Crountch?utm_source=github.com&utm_medium=referral&utm_content=fistons/Crountch&utm_campaign=badger)
+
 ## What?
 Crountch is an really basic URL shortener writen in ECMAScript for node.js using babel, pug, express and sqlite 
 
